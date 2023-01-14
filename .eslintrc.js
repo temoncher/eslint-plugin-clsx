@@ -8,6 +8,7 @@ module.exports = {
     extends: ['airbnb-base', 'plugin:prettier/recommended'],
     reportUnusedDisableDirectives: true,
     rules: {
+        'global-require': 0,
         'no-continue': 0,
         'no-unused-vars': [1, { argsIgnorePattern: '^_.*' }],
         'no-case-declarations': 2,
