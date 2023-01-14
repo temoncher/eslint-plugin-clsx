@@ -23,7 +23,6 @@ module.exports = {
                 capIsNewExceptionPattern: 'UNSAFE',
             },
         ],
-        'curly': [1, 'all'],
         'no-self-compare': 2,
         'no-irregular-whitespace': 2,
         'arrow-body-style': 1,

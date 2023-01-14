@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/temoncher/eslint-plugin-clsx#readme",
   "devDependencies": {
+    "@types/estree": "^1.0.0",
     "eslint": "^8.31.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.6.0",

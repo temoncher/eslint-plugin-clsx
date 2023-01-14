@@ -53,9 +53,10 @@ Here's an example ESLint configuration that:
 ✅ Set in the `recommended` [configuration](https://github.com/temoncher/eslint-plugin-clsx#presets).\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                 | Description                   | ⚠️ | 🔧 |
-| :--------------------------------------------------- | :---------------------------- | :- | :- |
-| [no-redundant-clsx](docs/rules/no-redundant-clsx.md) | disallow redundant clsx usage | ✅  | 🔧 |
+| Name                                                       | Description                              | ⚠️ | 🔧 |
+| :--------------------------------------------------------- | :--------------------------------------- | :- | :- |
+| [forbid-array-literal](docs/rules/forbid-array-literal.md) | disallow unnecessary array configuration | ✅  | 🔧 |
+| [no-redundant-clsx](docs/rules/no-redundant-clsx.md)       | disallow redundant clsx usage            | ✅  | 🔧 |
 
 <!-- end auto-generated rules list -->
 
@@ -75,3 +76,45 @@ Presets are enabled by adding a line to the `extends` list in your config file. 
     "extends": ["plugin:clsx/recommended"]
 }
 ```
+
+## <a name='Settings'></a>Settings
+
+This rule can optionally be configured with an object that represents imports that should be considered an clsx usage
+
+```json
+{
+    "settings": {
+        "clsxOptions": {
+            "myclsx": "default"
+        }
+    }
+}
+```
+
+Examples of **incorrect** code for the `{ myclsx: 'default' }` setting:
+
+```js
+import mc from 'myclsx';
+
+const singleClass = mc('single-class');
+```
+
+Examples of **incorrect** code for the `{ myclsx: 'cn' }` setting:
+
+```js
+import { cn } from 'myclsx';
+
+const singleClass = cn('single-class');
+```
+
+Examples of **incorrect** code for the `{ myclsx: ['default', 'cn'] }` setting:
+
+```js
+import mc, { cn } from 'myclsx';
+
+// both report errors
+const singleClass = cn('single-class');
+const singleClass = mc('single-class');
+```
+
+Default setting value is `{ clsx: 'default', classnames: 'default' }`
