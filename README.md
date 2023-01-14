@@ -33,20 +33,14 @@ npm install eslint-plugin-clsx --save-dev
 
 Here's an example ESLint configuration that:
 
-* Sets `sourceType` to `script` for CJS plugins (most users) (use `module` for ESM/TypeScript)
 * Enables the `recommended` configuration
 * Enables an optional/non-recommended rule
 
 ```json
 {
-    "parserOptions": {
-        "sourceType": "script"
-    },
-    "extends": [
-        "plugin:eslint-plugin/recommended"
-    ],
+    "extends": ["plugin:clsx/recommended"],
     "rules": {
-        "eslint-plugin/require-meta-docs-description": "error"
+        "clsx/no-redundant-clsx": "error"
     }
 }
 ```
@@ -78,8 +72,6 @@ Presets are enabled by adding a line to the `extends` list in your config file. 
 
 ```json
 {
-    "extends": [
-        "plugin:clsx/recommended"
-    ]
+    "extends": ["plugin:clsx/recommended"]
 }
 ```
