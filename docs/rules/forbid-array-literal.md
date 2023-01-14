@@ -1,4 +1,4 @@
-# Disallow unnecessary array configuration (`clsx/forbid-array-literal`)
+# Forbid array literal usage inside clsx (`clsx/forbid-array-literal`)
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 
