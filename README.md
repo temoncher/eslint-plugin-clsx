@@ -53,10 +53,11 @@ Here's an example ESLint configuration that:
 ✅ Set in the `recommended` [configuration](https://github.com/temoncher/eslint-plugin-clsx#presets).\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                 | Description                                          | ⚠️ | 🔧 |
-| :--------------------------------------------------- | :--------------------------------------------------- | :- | :- |
-| [array-literal](docs/rules/array-literal.md)         | enforce specific usage of array literals inside clsx | ✅  | 🔧 |
-| [no-redundant-clsx](docs/rules/no-redundant-clsx.md) | disallow redundant clsx usage                        | ✅  | 🔧 |
+| Name                                                 | Description                                           | ⚠️ | 🔧 |
+| :--------------------------------------------------- | :---------------------------------------------------- | :- | :- |
+| [array-literal](docs/rules/array-literal.md)         | enforce specific usage of array literals inside clsx  | ✅  | 🔧 |
+| [no-redundant-clsx](docs/rules/no-redundant-clsx.md) | disallow redundant clsx usage                         | ✅  | 🔧 |
+| [object-literal](docs/rules/object-literal.md)       | enforce specific usage of object literals inside clsx | ✅  | 🔧 |
 
 <!-- end auto-generated rules list -->
 
