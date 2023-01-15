@@ -57,12 +57,12 @@ Here's an example ESLint configuration that:
 | :--------------------------------------------------------------------------------------------- | :-------------------------------------------------------------- | :- | :- |
 | [forbid-array-expressions](docs/rules/forbid-array-expressions.md)                             | forbid usage of array expressions inside clsx                   | ✅  | 🔧 |
 | [forbid-false-inside-object-expressions](docs/rules/forbid-false-inside-object-expressions.md) | forbid usage of false literal inside object expressions of clsx | ✅  | 🔧 |
-| [forbid-logical-expressions](docs/rules/forbid-logical-expressions.md)                         | forbid usage of logical expressions inside clsx                 |    | 🔧 |
-| [forbid-object-expressions](docs/rules/forbid-object-expressions.md)                           | forbid usage of object expression inside clsx                   |    | 🔧 |
 | [forbid-true-inside-object-expressions](docs/rules/forbid-true-inside-object-expressions.md)   | forbid usage of true literal inside object expressions of clsx  | ✅  | 🔧 |
 | [no-redundant-clsx](docs/rules/no-redundant-clsx.md)                                           | disallow redundant clsx usage                                   | ✅  | 🔧 |
 | [no-spreading](docs/rules/no-spreading.md)                                                     | forbid usage of object expression inside clsx                   | ✅  | 🔧 |
+| [prefer-logical-over-objects](docs/rules/prefer-logical-over-objects.md)                       | forbid usage of object expression inside clsx                   |    | 🔧 |
 | [prefer-merged-neighboring-elements](docs/rules/prefer-merged-neighboring-elements.md)         | enforce merging of neighboring elements                         | ✅  | 🔧 |
+| [prefer-objects-over-logical](docs/rules/prefer-objects-over-logical.md)                       | forbid usage of logical expressions inside clsx                 |    | 🔧 |
 
 <!-- end auto-generated rules list -->
 
