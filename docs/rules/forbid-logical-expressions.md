@@ -1,5 +1,7 @@
 # Forbid usage of logical expressions inside clsx (`clsx/forbid-logical-expressions`)
 
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
 <!-- end auto-generated rule header -->
 
 ## Rule Details
