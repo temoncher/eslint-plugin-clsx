@@ -1,4 +1,4 @@
-# Forbid array literal usage inside clsx (`clsx/forbid-array-literal`)
+# Enforce specific usage of array literals inside clsx (`clsx/array-literal`)
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 
@@ -8,12 +8,12 @@
 
 ## Rule Details
 
-This rule aims to enforce specific usage of array literals as a configuration to clsx
+This rule aims to enforce specific usage of array literals inside clsx
 
 Examples of **incorrect** code for this rule:
 
 ```js
-/* eslint clsx/forbid-array-literal: error */
+/* eslint clsx/array-literal: error */
 
 const singleClass = clsx(['single-class']);
 ```
@@ -21,7 +21,7 @@ const singleClass = clsx(['single-class']);
 Examples of **correct** code for this rule:
 
 ```js
-/* eslint clsx/forbid-array-literal: error */
+/* eslint clsx/array-literal: error */
 
 const singleClass = clsx('single-class');
 const twoClasses = clsx(['first-class', 'second-class']);
@@ -31,20 +31,20 @@ const dynamic = clsx('some-class', classes);
 
 ## Options
 
-### forbidSingle (default)
+### forbidSingleElement (default)
 
-Examples of **incorrect** code for the `forbidSingle` option:
+Examples of **incorrect** code for the `forbidSingleElement` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'forbidSingle'] */
+/* eslint clsx/array-literal: ['error', 'forbidSingleElement'] */
 
 const singleClass = clsx(['single-class']);
 ```
 
-Examples of **correct** code for the `forbidSingle` option:
+Examples of **correct** code for the `forbidSingleElement` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'forbidSingle'] */
+/* eslint clsx/array-literal: ['error', 'forbidSingleElement'] */
 
 const singleClass = clsx('single-class');
 const twoClasses = clsx(['first-class', 'second-class']);
@@ -52,20 +52,20 @@ const classes = ['first-class', 'second-class'];
 const dynamic = clsx('some-class', classes);
 ```
 
-### forbidAny
+### forbid
 
-Examples of **incorrect** code for the `forbidAny` option:
+Examples of **incorrect** code for the `forbid` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'forbidAny'] */
+/* eslint clsx/array-literal: ['error', 'forbid'] */
 
 const twoClasses = clsx(['first-class', 'second-class']);
 ```
 
-Examples of **correct** code for the `forbidAny` option:
+Examples of **correct** code for the `forbid` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'forbidAny'] */
+/* eslint clsx/array-literal: ['error', 'forbid'] */
 
 const singleClass = clsx('single-class');
 const twoClasses = clsx('first-class', 'second-class');
