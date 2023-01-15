@@ -30,12 +30,12 @@ const classWithLogicalExpression = clsx('single-class');
 
 Reports error but does not auto-fix it
 
-### autofixToLogicalExpression
+### autofixToObjectExpression
 
 Reports error and auto-fixes logical expressions into object expression
 
 ```js
-/* eslint clsx/forbid-logical-expressions: ['error', 'autofixToLogicalExpression'] */
+/* eslint clsx/forbid-logical-expressions: ['error', 'autofixToObjectExpression'] */
 
 const someClasses = clsx(true && false && 'class-1', condition && 'class-2');
 // auto-fixes into
