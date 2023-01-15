@@ -15,7 +15,7 @@ Examples of **incorrect** code for this rule:
 ```js
 /* eslint clsx/no-redundant-clsx: error */
 
-const singleClass = clsx('single-class');
+const singleClasses = clsx('single-class');
 ```
 
 Examples of **correct** code for this rule:
@@ -23,8 +23,8 @@ Examples of **correct** code for this rule:
 ```js
 /* eslint clsx/no-redundant-clsx: error */
 
-const singleClass = 'single-class';
-const twoClasses = clsx('first-class', 'second-class')
+const singleClasses = 'single-class';
+const twoClasseses = clsx('first-class', 'second-class')
 ```
 
 ## When Not To Use It

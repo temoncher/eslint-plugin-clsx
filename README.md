@@ -53,13 +53,14 @@ Here's an example ESLint configuration that:
 ✅ Set in the `recommended` [configuration](https://github.com/temoncher/eslint-plugin-clsx#presets).\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                                     | Description                                                  | ⚠️ | 🔧 |
-| :----------------------------------------------------------------------- | :----------------------------------------------------------- | :- | :- |
-| [forbid-array-literal](docs/rules/forbid-array-literal.md)               | forbid usage of array literals inside clsx                   | ✅  | 🔧 |
-| [forbid-logical-expressions](docs/rules/forbid-logical-expressions.md)   | forbid usage of logical expressions inside clsx              |    |    |
-| [forbid-object-literal-false](docs/rules/forbid-object-literal-false.md) | forbid usage of false literal inside object literals of clsx | ✅  | 🔧 |
-| [forbid-object-literal-true](docs/rules/forbid-object-literal-true.md)   | forbid usage of true literal inside object literals of clsx  | ✅  | 🔧 |
-| [no-redundant-clsx](docs/rules/no-redundant-clsx.md)                     | disallow redundant clsx usage                                | ✅  | 🔧 |
+| Name                                                                                           | Description                                                     | ⚠️ | 🔧 |
+| :--------------------------------------------------------------------------------------------- | :-------------------------------------------------------------- | :- | :- |
+| [forbid-array-expressions](docs/rules/forbid-array-expressions.md)                             | forbid usage of array expressions inside clsx                   | ✅  | 🔧 |
+| [forbid-false-inside-object-expressions](docs/rules/forbid-false-inside-object-expressions.md) | forbid usage of false literal inside object expressions of clsx | ✅  | 🔧 |
+| [forbid-logical-expressions](docs/rules/forbid-logical-expressions.md)                         | forbid usage of logical expressions inside clsx                 |    |    |
+| [forbid-object-expressions](docs/rules/forbid-object-expressions.md)                           | forbid usage of object expression inside clsx                   |    | 🔧 |
+| [forbid-true-inside-object-expressions](docs/rules/forbid-true-inside-object-expressions.md)   | forbid usage of true literal inside object expressions of clsx  | ✅  | 🔧 |
+| [no-redundant-clsx](docs/rules/no-redundant-clsx.md)                                           | disallow redundant clsx usage                                   | ✅  | 🔧 |
 
 <!-- end auto-generated rules list -->
 
@@ -99,7 +100,7 @@ Examples of **incorrect** code for the `{ myclsx: 'default' }` setting (with no-
 ```js
 import mc from 'myclsx';
 
-const singleClass = mc('single-class');
+const singleClasses = mc('single-class');
 ```
 
 Examples of **incorrect** code for the `{ myclsx: 'cn' }` setting (with no-redundant-clsx rule enabled):
@@ -107,7 +108,7 @@ Examples of **incorrect** code for the `{ myclsx: 'cn' }` setting (with no-redun
 ```js
 import { cn } from 'myclsx';
 
-const singleClass = cn('single-class');
+const singleClasses = cn('single-class');
 ```
 
 Examples of **incorrect** code for the `{ myclsx: ['default', 'cn'] }` setting (with no-redundant-clsx rule enabled):
@@ -116,8 +117,8 @@ Examples of **incorrect** code for the `{ myclsx: ['default', 'cn'] }` setting (
 import mc, { cn } from 'myclsx';
 
 // both report errors
-const singleClass = cn('single-class');
-const singleClass = mc('single-class');
+const singleClasses = cn('single-class');
+const singleClasses = mc('single-class');
 ```
 
 Default setting value is `{ clsx: 'default', classnames: 'default' }`

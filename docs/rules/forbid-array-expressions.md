@@ -1,4 +1,4 @@
-# Forbid usage of array literals inside clsx (`clsx/forbid-array-literal`)
+# Forbid usage of array expressions inside clsx (`clsx/forbid-array-expressions`)
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 
@@ -8,23 +8,23 @@
 
 ## Rule Details
 
-This rule aims to forbid usage of array literals inside clsx
+This rule aims to forbid usage of array expressions inside clsx
 
 Examples of **incorrect** code for this rule:
 
 ```js
-/* eslint clsx/forbid-array-literal: error */
+/* eslint clsx/forbid-array-expressions: error */
 
-const singleClass = clsx(['single-class']);
+const singleClasses = clsx(['single-class']);
 ```
 
 Examples of **correct** code for this rule:
 
 ```js
-/* eslint clsx/forbid-array-literal: error */
+/* eslint clsx/forbid-array-expressions: error */
 
-const singleClass = clsx('single-class');
-const twoClasses = clsx(['first-class', 'second-class']);
+const singleClasses = clsx('single-class');
+const twoClasseses = clsx(['first-class', 'second-class']);
 const classes = ['first-class', 'second-class'];
 const dynamic = clsx('some-class', classes);
 ```
@@ -36,18 +36,18 @@ const dynamic = clsx('some-class', classes);
 Examples of **incorrect** code for the `always` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'always'] */
+/* eslint clsx/forbid-array-expressions: ['error', 'always'] */
 
-const twoClasses = clsx(['first-class', 'second-class']);
+const twoClasseses = clsx(['first-class', 'second-class']);
 ```
 
 Examples of **correct** code for the `always` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'always'] */
+/* eslint clsx/forbid-array-expressions: ['error', 'always'] */
 
-const singleClass = clsx('single-class');
-const twoClasses = clsx('first-class', 'second-class');
+const singleClasses = clsx('single-class');
+const twoClasseses = clsx('first-class', 'second-class');
 const classes = ['first-class', 'second-class'];
 const dynamic = clsx('some-class', classes);
 ```
@@ -57,22 +57,22 @@ const dynamic = clsx('some-class', classes);
 Examples of **incorrect** code for the `onlySingleElement` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'onlySingleElement'] */
+/* eslint clsx/forbid-array-expressions: ['error', 'onlySingleElement'] */
 
-const singleClass = clsx(['single-class']);
+const singleClasses = clsx(['single-class']);
 ```
 
 Examples of **correct** code for the `onlySingleElement` option:
 
 ```js
-/* eslint clsx/forbid-array-literal: ['error', 'onlySingleElement'] */
+/* eslint clsx/forbid-array-expressions: ['error', 'onlySingleElement'] */
 
-const singleClass = clsx('single-class');
-const twoClasses = clsx(['first-class', 'second-class']);
+const singleClasses = clsx('single-class');
+const twoClasseses = clsx(['first-class', 'second-class']);
 const classes = ['first-class', 'second-class'];
 const dynamic = clsx('some-class', classes);
 ```
 
 ## When Not To Use It
 
-If you don't want to enforce specific usage of array literals inside clsx
+If you don't want to enforce specific usage of array expressions inside clsx
