@@ -53,11 +53,13 @@ Here's an example ESLint configuration that:
 ✅ Set in the `recommended` [configuration](https://github.com/temoncher/eslint-plugin-clsx#presets).\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                 | Description                                           | ⚠️ | 🔧 |
-| :--------------------------------------------------- | :---------------------------------------------------- | :- | :- |
-| [array-literal](docs/rules/array-literal.md)         | enforce specific usage of array literals inside clsx  | ✅  | 🔧 |
-| [no-redundant-clsx](docs/rules/no-redundant-clsx.md) | disallow redundant clsx usage                         | ✅  | 🔧 |
-| [object-literal](docs/rules/object-literal.md)       | enforce specific usage of object literals inside clsx | ✅  | 🔧 |
+| Name                                                                     | Description                                                  | ⚠️ | 🔧 |
+| :----------------------------------------------------------------------- | :----------------------------------------------------------- | :- | :- |
+| [forbid-array-literal](docs/rules/forbid-array-literal.md)               | forbid usage of array literals inside clsx                   | ✅  | 🔧 |
+| [forbid-logical-expressions](docs/rules/forbid-logical-expressions.md)   | forbid usage of logical expressions inside clsx              |    |    |
+| [forbid-object-literal-false](docs/rules/forbid-object-literal-false.md) | forbid usage of false literal inside object literals of clsx | ✅  | 🔧 |
+| [forbid-object-literal-true](docs/rules/forbid-object-literal-true.md)   | forbid usage of true literal inside object literals of clsx  | ✅  | 🔧 |
+| [no-redundant-clsx](docs/rules/no-redundant-clsx.md)                     | disallow redundant clsx usage                                | ✅  | 🔧 |
 
 <!-- end auto-generated rules list -->
 
@@ -92,7 +94,7 @@ This rule can optionally be configured with an object that represents imports th
 }
 ```
 
-Examples of **incorrect** code for the `{ myclsx: 'default' }` setting:
+Examples of **incorrect** code for the `{ myclsx: 'default' }` setting (with no-redundant-clsx rule enabled):
 
 ```js
 import mc from 'myclsx';
@@ -100,7 +102,7 @@ import mc from 'myclsx';
 const singleClass = mc('single-class');
 ```
 
-Examples of **incorrect** code for the `{ myclsx: 'cn' }` setting:
+Examples of **incorrect** code for the `{ myclsx: 'cn' }` setting (with no-redundant-clsx rule enabled):
 
 ```js
 import { cn } from 'myclsx';
@@ -108,7 +110,7 @@ import { cn } from 'myclsx';
 const singleClass = cn('single-class');
 ```
 
-Examples of **incorrect** code for the `{ myclsx: ['default', 'cn'] }` setting:
+Examples of **incorrect** code for the `{ myclsx: ['default', 'cn'] }` setting (with no-redundant-clsx rule enabled):
 
 ```js
 import mc, { cn } from 'myclsx';
