@@ -62,6 +62,7 @@ Here's an example ESLint configuration that:
 | [forbid-true-inside-object-expressions](docs/rules/forbid-true-inside-object-expressions.md)   | forbid usage of true literal inside object expressions of clsx  | ✅  | 🔧 |
 | [no-redundant-clsx](docs/rules/no-redundant-clsx.md)                                           | disallow redundant clsx usage                                   | ✅  | 🔧 |
 | [no-spreading](docs/rules/no-spreading.md)                                                     | forbid usage of object expression inside clsx                   | ✅  | 🔧 |
+| [prefer-merged-neighboring-elements](docs/rules/prefer-merged-neighboring-elements.md)         | enforce merging of neighboring elements                         | ✅  | 🔧 |
 
 <!-- end auto-generated rules list -->
 
