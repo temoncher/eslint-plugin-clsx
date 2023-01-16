@@ -1,16 +1,16 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'script',
+        sourceType: 'module',
     },
     extends: ['airbnb-base', 'plugin:prettier/recommended'],
     reportUnusedDisableDirectives: true,
     rules: {
         'global-require': 0,
         'no-continue': 0,
-        'no-unused-vars': [1, { argsIgnorePattern: '^_.*' }],
         'no-case-declarations': 2,
         'prefer-destructuring': 1,
         'no-param-reassign': 2,
@@ -72,4 +72,22 @@ module.exports = {
             },
         ],
     },
+    overrides: [
+        {
+            files: ['**/*.ts', '**/*.tsx'],
+            extends: [
+                'plugin:@typescript-eslint/recommended-requiring-type-checking',
+                'plugin:@typescript-eslint/strict',
+                'airbnb-typescript/base',
+                'plugin:import/typescript',
+                'plugin:prettier/recommended',
+            ],
+            parserOptions: {
+                project: './tsconfig.json',
+            },
+            rules: {
+                '@typescript-eslint/no-unused-vars': [1, { argsIgnorePattern: '^_.*' }],
+            },
+        },
+    ],
 };

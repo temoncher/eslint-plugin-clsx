@@ -1,8 +1,8 @@
-// @ts-check
-const utils = require('../utils');
+import type { Rule } from 'eslint';
+import { ObjectExpression } from 'estree';
+import * as utils from '../utils';
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule: Rule.RuleModule = {
     meta: {
         type: 'suggestion',
         docs: {
@@ -18,8 +18,7 @@ module.exports = {
     create(context) {
         const sourceCode = context.getSourceCode();
         const clsxOptions = utils.extractClsxOptions(context);
-        /** @type {('object')[]} */
-        const mergedFor = context.options[0] ?? ['object'];
+        const mergedFor = (context.options[0] as ['object'] | undefined) ?? ['object'];
 
         return {
             ImportDeclaration(importNode) {
@@ -44,13 +43,12 @@ module.exports = {
                         if (
                             mergedFor.includes('object') &&
                             usageChunks.some(
-                                (chunk) => chunk[0].type === 'ObjectExpression' && chunk.length > 1
+                                (chunk) => chunk[0]!.type === 'ObjectExpression' && chunk.length > 1
                             )
                         ) {
                             const args = usageChunks.map((chunk) => {
-                                if (chunk[0].type === 'ObjectExpression') {
-                                    const objectsArr =
-                                        /** @type {import('estree').ObjectExpression[]} */ (chunk);
+                                if (chunk[0]!.type === 'ObjectExpression') {
+                                    const objectsArr = chunk as ObjectExpression[];
                                     const newObjectPropsText = objectsArr
                                         .flatMap((se) => se.properties)
                                         .map((prop) => sourceCode.getText(prop))
@@ -79,3 +77,5 @@ module.exports = {
         };
     },
 };
+
+export = rule;

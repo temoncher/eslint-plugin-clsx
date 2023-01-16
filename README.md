@@ -123,4 +123,4 @@ const singleClasses = cn('single-class');
 const singleClasses = mc('single-class');
 ```
 
-Default setting value is `{ clsx: 'default', classnames: 'default' }`
+Default setting value is `{ clsx: ['default', 'clsx'], classnames: 'default' }`

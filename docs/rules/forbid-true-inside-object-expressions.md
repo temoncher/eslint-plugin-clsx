@@ -16,7 +16,6 @@ Examples of **incorrect** code for this rule:
 /* eslint clsx/forbid-true-inside-object-expressions: error */
 
 const trueClasses = clsx({ 'true-class-1': true, 'true-class-2': true });
-const falseClasses = clsx({ 'dynamic-condition-class': condition, 'false-class': false });
 ```
 
 Examples of **correct** code for this rule:
@@ -25,7 +24,7 @@ Examples of **correct** code for this rule:
 /* eslint clsx/forbid-true-inside-object-expressions: error */
 
 const trueClasses = clsx('true-class-1', 'true-class-2');
-const falseClasses = clsx({ 'dynamic-condition-class': condition });
+const dynamicClasses = clsx({ 'dynamic-condition-class': condition });
 ```
 
 ## Options

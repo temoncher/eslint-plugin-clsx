@@ -1,8 +1,8 @@
-// @ts-check
-const utils = require('../utils');
+import type { Rule } from 'eslint';
+import type { LogicalExpression } from 'estree';
+import * as utils from '../utils';
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule: Rule.RuleModule = {
     meta: {
         type: 'suggestion',
         docs: {
@@ -25,8 +25,8 @@ module.exports = {
     create(context) {
         const sourceCode = context.getSourceCode();
         const clsxOptions = utils.extractClsxOptions(context);
-        /** @type {{ startingFrom: number, endingWith: number }} */
-        const { startingFrom = 0, endingWith = Infinity } = context.options[0] ?? {};
+        const { startingFrom = 0, endingWith = Infinity } =
+            (context.options[0] as { startingFrom: number; endingWith: number } | undefined) ?? {};
 
         return {
             ImportDeclaration(importNode) {
@@ -50,7 +50,7 @@ module.exports = {
                         if (
                             !usageChunks.some(
                                 (chunk) =>
-                                    chunk[0].type === 'LogicalExpression' &&
+                                    chunk[0]!.type === 'LogicalExpression' &&
                                     chunk.length >= startingFrom &&
                                     chunk.length < endingWith
                             )
@@ -58,9 +58,8 @@ module.exports = {
                             return;
 
                         const args = usageChunks.map((chunk) => {
-                            if (chunk[0].type === 'LogicalExpression') {
-                                const logicalExpressions =
-                                    /** @type {import('estree').LogicalExpression[]} */ (chunk);
+                            if (chunk[0]!.type === 'LogicalExpression') {
+                                const logicalExpressions = chunk as LogicalExpression[];
                                 const newObjectPropsText = logicalExpressions
                                     .map((prop) => {
                                         const keyText =
@@ -94,3 +93,5 @@ module.exports = {
         };
     },
 };
+
+export = rule;

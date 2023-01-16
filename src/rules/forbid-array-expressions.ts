@@ -1,8 +1,7 @@
-// @ts-check
-const utils = require('../utils');
+import type { Rule } from 'eslint';
+import * as utils from '../utils';
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule: Rule.RuleModule = {
     meta: {
         type: 'suggestion',
         docs: {
@@ -19,7 +18,8 @@ module.exports = {
     create(context) {
         const sourceCode = context.getSourceCode();
         const clsxOptions = utils.extractClsxOptions(context);
-        const ruleOptions = context.options[0] ?? 'always';
+        const ruleOptions =
+            (context.options[0] as 'onlySingleElement' | 'always' | undefined) ?? 'always';
 
         return {
             ImportDeclaration(importNode) {
@@ -44,7 +44,7 @@ module.exports = {
                                     fixer.replaceText(
                                         argumentNode,
                                         argumentNode.elements
-                                            .map((el) => sourceCode.getText(el))
+                                            .map((el) => sourceCode.getText(el!))
                                             .join(', ')
                                     ),
                             });
@@ -62,7 +62,7 @@ module.exports = {
                                 fix: (fixer) =>
                                     fixer.replaceText(
                                         argumentNode,
-                                        sourceCode.getText(argumentNode.elements[0])
+                                        sourceCode.getText(argumentNode.elements[0]!)
                                     ),
                             });
                         }
@@ -71,3 +71,5 @@ module.exports = {
         };
     },
 };
+
+export = rule;

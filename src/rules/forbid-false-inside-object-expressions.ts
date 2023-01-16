@@ -1,10 +1,7 @@
-// @ts-check
-const utils = require('../utils');
+import type { Rule } from 'eslint';
+import * as utils from '../utils';
 
-/** @typedef {{ allowFalseLiterals: boolean, allowTrueLiterals: 'always' | 'allowMixed' | 'never' }} ObjectLiteralRuleOptions */
-
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule: Rule.RuleModule = {
     meta: {
         type: 'suggestion',
         docs: {
@@ -62,3 +59,5 @@ module.exports = {
         };
     },
 };
+
+export = rule;

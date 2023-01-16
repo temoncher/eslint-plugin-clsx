@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "lib": ["ESNext"],
+        "module": "commonjs",
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "noUncheckedIndexedAccess": true
+    }
+}

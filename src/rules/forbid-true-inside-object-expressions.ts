@@ -1,9 +1,9 @@
-// @ts-check
-const partition = require('lodash/partition');
-const utils = require('../utils');
+import type { Rule } from 'eslint';
+import type { Property } from 'estree';
+import * as R from 'remeda';
+import * as utils from '../utils';
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule: Rule.RuleModule = {
     meta: {
         type: 'suggestion',
         docs: {
@@ -19,8 +19,8 @@ module.exports = {
     create(context) {
         const sourceCode = context.getSourceCode();
         const clsxOptions = utils.extractClsxOptions(context);
-        /** @type {'always' | 'allowMixed'} */
-        const allowTrueLiterals = context.options[0] ?? 'allowMixed';
+        const allowTrueLiterals =
+            (context.options[0] as 'always' | 'allowMixed' | undefined) ?? 'allowMixed';
 
         return {
             ImportDeclaration(importNode) {
@@ -38,7 +38,7 @@ module.exports = {
                     .forEach((argumentNode) => {
                         if (argumentNode.type !== 'ObjectExpression') return;
 
-                        const [trueLiteralProps, otherProps] = partition(
+                        const [trueLiteralProps, otherProps] = R.partition(
                             argumentNode.properties,
                             (prop) =>
                                 prop.type === 'Property' &&
@@ -51,10 +51,9 @@ module.exports = {
                             (allowTrueLiterals === 'always' ||
                                 (allowTrueLiterals === 'allowMixed' && otherProps.length === 0))
                         ) {
-                            const trueLiteralPropsText =
-                                /** @type {import('estree').Property[]} */ (trueLiteralProps)
-                                    .map((el) => sourceCode.getText(el.key))
-                                    .join(', ');
+                            const trueLiteralPropsText = (trueLiteralProps as Property[])
+                                .map((el) => sourceCode.getText(el.key))
+                                .join(', ');
                             const otherPropsText = otherProps
                                 .map((prop) => sourceCode.getText(prop))
                                 .join(', ');
@@ -69,7 +68,7 @@ module.exports = {
                                     fixer.replaceText(
                                         argumentNode,
                                         [trueLiteralPropsText, otherPropsWrappedInObject]
-                                            .filter(utils.isDefined)
+                                            .filter(R.isDefined)
                                             .join(', ')
                                     ),
                             });
@@ -79,3 +78,5 @@ module.exports = {
         };
     },
 };
+
+export = rule;

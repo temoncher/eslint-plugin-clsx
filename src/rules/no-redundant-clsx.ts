@@ -1,8 +1,7 @@
-// @ts-check
-const utils = require('../utils');
+import type { Rule } from 'eslint';
+import * as utils from '../utils';
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule: Rule.RuleModule = {
     meta: {
         type: 'suggestion',
         docs: {
@@ -35,11 +34,11 @@ module.exports = {
 
                     const firstArg = clsxCallNode.arguments[0];
 
-                    if (firstArg.type === 'Literal') {
+                    if (firstArg?.type === 'Literal') {
                         context.report({
                             messageId: 'default',
                             node: clsxCallNode,
-                            fix: (fixer) => fixer.replaceText(clsxCallNode, firstArg.raw),
+                            fix: (fixer) => fixer.replaceText(clsxCallNode, firstArg.raw!),
                         });
                     }
 
@@ -50,3 +49,5 @@ module.exports = {
         };
     },
 };
+
+export = rule;

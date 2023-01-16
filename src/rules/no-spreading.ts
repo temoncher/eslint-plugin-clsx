@@ -1,8 +1,8 @@
-// @ts-check
-const utils = require('../utils');
+import type { Rule } from 'eslint';
+import type { Property, SpreadElement } from 'estree';
+import * as utils from '../utils';
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule: Rule.RuleModule = {
     meta: {
         type: 'suggestion',
         docs: {
@@ -18,8 +18,7 @@ module.exports = {
     create(context) {
         const sourceCode = context.getSourceCode();
         const clsxOptions = utils.extractClsxOptions(context);
-        /** @type {('object')[]} */
-        const forbiddenFor = context.options[0] ?? ['object'];
+        const forbiddenFor = (context.options[0] as ['object'] | undefined) ?? ['object'];
 
         return {
             ImportDeclaration(importNode) {
@@ -46,16 +45,15 @@ module.exports = {
                             );
 
                             const args = alternatingSpreadsAndProps.map((chunk) => {
-                                if (chunk[0].type === 'SpreadElement') {
-                                    const spreadsArr =
-                                        /** @type {import('estree').SpreadElement[]} */ (chunk);
+                                if (chunk[0]!.type === 'SpreadElement') {
+                                    const spreadsArr = chunk as SpreadElement[];
 
                                     return spreadsArr
                                         .map((se) => sourceCode.getText(se.argument))
                                         .join(', ');
                                 }
 
-                                const propsArr = /** @type {import('estree').Property[]} */ (chunk);
+                                const propsArr = chunk as Property[];
                                 const propsText = propsArr
                                     .map((prop) => {
                                         const keyText = sourceCode.getText(prop.key);
@@ -83,3 +81,5 @@ module.exports = {
         };
     },
 };
+
+export = rule;
