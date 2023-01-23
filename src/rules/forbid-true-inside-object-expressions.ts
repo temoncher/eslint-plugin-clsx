@@ -52,7 +52,11 @@ const rule: Rule.RuleModule = {
                                 (allowTrueLiterals === 'allowMixed' && otherProps.length === 0))
                         ) {
                             const trueLiteralPropsText = (trueLiteralProps as Property[])
-                                .map((el) => sourceCode.getText(el.key))
+                                .map((el) => {
+                                    const keyText = sourceCode.getText(el.key);
+
+                                    return el.computed ? keyText : `'${keyText}'`;
+                                })
                                 .join(', ');
                             const otherPropsText = otherProps
                                 .map((prop) => sourceCode.getText(prop))
