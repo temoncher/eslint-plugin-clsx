@@ -34,11 +34,11 @@ const rule: Rule.RuleModule = {
 
                     const firstArg = clsxCallNode.arguments[0];
 
-                    if (firstArg?.type === 'Literal') {
+                    if (firstArg?.type === 'Literal' || firstArg?.type === 'TemplateLiteral') {
                         context.report({
                             messageId: 'default',
                             node: clsxCallNode,
-                            fix: (fixer) => fixer.replaceText(clsxCallNode, firstArg.raw!),
+                            fix: (fixer) => fixer.replaceText(clsxCallNode, sourceCode.getText(firstArg)),
                         });
                     }
 
