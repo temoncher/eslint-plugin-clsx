@@ -38,7 +38,8 @@ const rule: Rule.RuleModule = {
                         context.report({
                             messageId: 'default',
                             node: clsxCallNode,
-                            fix: (fixer) => fixer.replaceText(clsxCallNode, sourceCode.getText(firstArg)),
+                            fix: (fixer) =>
+                                fixer.replaceText(clsxCallNode, sourceCode.getText(firstArg)),
                         });
                     }
 
