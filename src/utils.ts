@@ -1,17 +1,16 @@
-import type { ImportDeclaration, Node, SimpleCallExpression } from 'estree';
-import type { Rule, SourceCode } from 'eslint';
+import { TSESTree } from '@typescript-eslint/types';
+import type { RuleContext, SourceCode } from '@typescript-eslint/utils/ts-eslint';
 import * as R from 'remeda';
 
 type ClsxOptions = Record<string, string | string[]>;
 
-export const chunkBy = <T>(collection: T[], chunker: (el: T) => unknown) => {
+export function chunkBy<T>(collection: T[], chunker: (el: T) => unknown) {
     const res = [] as T[][];
-
     const temp = [collection[0]] as T[];
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     let lastChunkMarker = chunker(collection[0]!);
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const el of collection.slice(1)) {
         const currentChunkMarker = chunker(el);
 
@@ -32,9 +31,9 @@ export const chunkBy = <T>(collection: T[], chunker: (el: T) => unknown) => {
     if (temp.length) res.push(temp);
 
     return res;
-};
+}
 
-export const findClsxImport = (importNode: ImportDeclaration, clsxOptions: ClsxOptions) => {
+export function findClsxImport(importNode: TSESTree.ImportDeclaration, clsxOptions: ClsxOptions) {
     if (typeof importNode.source.value !== 'string') {
         throw new Error('import source value is not a string');
     }
@@ -46,47 +45,56 @@ export const findClsxImport = (importNode: ImportDeclaration, clsxOptions: ClsxO
         ?.map((name) => {
             if (name === 'default') {
                 const defaultSpecifier = importNode.specifiers.find(
-                    (s) => s.type === 'ImportDefaultSpecifier'
+                    (s) => s.type === TSESTree.AST_NODE_TYPES.ImportDefaultSpecifier
                 );
 
                 return defaultSpecifier?.local.name;
             }
 
             const named = importNode.specifiers.find(
-                (s) => s.type === 'ImportSpecifier' && s.imported.name === name
+                (s) =>
+                    s.type === TSESTree.AST_NODE_TYPES.ImportSpecifier && s.imported.name === name
             );
 
             return named?.local.name;
         })
         .filter(R.isDefined);
-};
+}
 
-const isCallExpressionWithName =
-    <N extends string>(name: N) =>
-    (node: Node | undefined | null): node is SimpleCallExpression & { callee: { name: N } } =>
+function isCallExpressionWithName<N extends string>(name: N) {
+    return (
+        node: TSESTree.Node | undefined | null
+    ): node is TSESTree.CallExpression & { callee: { name: N } } =>
         !!node &&
-        node.type === 'CallExpression' &&
+        node.type === TSESTree.AST_NODE_TYPES.CallExpression &&
         'name' in node.callee &&
         node.callee.name === name;
+}
 
-export const getClsxUsages = (
-    importNode: ImportDeclaration,
+export function getClsxUsages(
+    importNode: TSESTree.ImportDeclaration,
     sourceCode: SourceCode,
     assignedClsxNames: string[]
-) =>
-    assignedClsxNames
+) {
+    return assignedClsxNames
         .flatMap((assignedClsxName) =>
             sourceCode.scopeManager
-                .getDeclaredVariables(importNode)
+                ?.getDeclaredVariables(importNode)
                 .find((variable) => variable.name === assignedClsxName)
-                ?.references.map((ref) => (ref.identifier as unknown as { parent: Node }).parent)
+                ?.references.map(
+                    (ref) => (ref.identifier as unknown as { parent: TSESTree.Node }).parent
+                )
                 .filter(R.isDefined)
                 .filter(isCallExpressionWithName(assignedClsxName))
         )
         .filter(R.isDefined);
+}
 
-export const extractClsxOptions = (context: Rule.RuleContext) =>
-    (context.settings.clsxOptions ?? {
+export function extractClsxOptions<M extends string, O extends readonly unknown[]>(
+    context: RuleContext<M, O>
+) {
+    return (context.settings.clsxOptions ?? {
         clsx: ['default', 'clsx'],
         classnames: 'default',
     }) as ClsxOptions;
+}

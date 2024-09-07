@@ -1,8 +1,11 @@
-import type { Rule } from 'eslint';
-import { ObjectExpression } from 'estree';
+import { TSESTree } from '@typescript-eslint/types';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'prefer-merged-neighboring-elements',
+    defaultOptions: ['object' as const],
     meta: {
         type: 'suggestion',
         docs: {
@@ -10,15 +13,14 @@ const rule: Rule.RuleModule = {
             recommended: true,
         },
         fixable: 'code',
-        schema: [{ type: 'array', items: { enum: ['object'] } }],
+        schema: [{ type: 'array', items: { type: 'string', enum: ['object'] } }],
         messages: {
             object: 'Neighboring objects should be merged',
         },
     },
-    create(context) {
-        const sourceCode = context.getSourceCode();
+    create(context, [mergedFor]) {
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
-        const mergedFor = (context.options[0] as ['object'] | undefined) ?? ['object'];
 
         return {
             ImportDeclaration(importNode) {
@@ -43,12 +45,14 @@ const rule: Rule.RuleModule = {
                         if (
                             mergedFor.includes('object') &&
                             usageChunks.some(
-                                (chunk) => chunk[0]!.type === 'ObjectExpression' && chunk.length > 1
+                                (chunk) =>
+                                    chunk[0]?.type === TSESTree.AST_NODE_TYPES.ObjectExpression &&
+                                    chunk.length > 1
                             )
                         ) {
                             const args = usageChunks.map((chunk) => {
-                                if (chunk[0]!.type === 'ObjectExpression') {
-                                    const objectsArr = chunk as ObjectExpression[];
+                                if (chunk[0]?.type === TSESTree.AST_NODE_TYPES.ObjectExpression) {
+                                    const objectsArr = chunk as TSESTree.ObjectExpression[];
                                     const newObjectPropsText = objectsArr
                                         .flatMap((se) => se.properties)
                                         .map((prop) => sourceCode.getText(prop))
@@ -76,6 +80,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});

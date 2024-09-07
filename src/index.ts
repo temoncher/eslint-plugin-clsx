@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as R from 'remeda';
+
 import type { Rule } from 'eslint';
+import * as R from 'remeda';
 
 import packageJson from '../package.json';
 
@@ -19,7 +20,8 @@ const allRules = Object.fromEntries(
 
         .map((ruleName) => [
             ruleName,
-            // eslint-disable-next-line import/no-dynamic-require
+
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             require(path.join(__dirname, 'rules', ruleName)) as Rule.RuleModule,
         ])
 );

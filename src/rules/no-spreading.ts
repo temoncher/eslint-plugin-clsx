@@ -1,8 +1,11 @@
-import type { Rule } from 'eslint';
-import type { Property, SpreadElement } from 'estree';
+import { TSESTree } from '@typescript-eslint/types';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'no-spreading',
+    defaultOptions: ['object' as const],
     meta: {
         type: 'suggestion',
         docs: {
@@ -10,15 +13,14 @@ const rule: Rule.RuleModule = {
             recommended: true,
         },
         fixable: 'code',
-        schema: [{ type: 'array', items: { enum: ['object'] } }],
+        schema: [{ type: 'array', items: { type: 'string', enum: ['object'] } }],
         messages: {
             default: 'Usage of object expression inside clsx is forbidden',
         },
     },
-    create(context) {
-        const sourceCode = context.getSourceCode();
+    create(context, [forbiddenFor]) {
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
-        const forbiddenFor = (context.options[0] as ['object'] | undefined) ?? ['object'];
 
         return {
             ImportDeclaration(importNode) {
@@ -36,24 +38,26 @@ const rule: Rule.RuleModule = {
                     .forEach((argumentNode) => {
                         if (
                             forbiddenFor.includes('object') &&
-                            argumentNode.type === 'ObjectExpression' &&
-                            argumentNode.properties.some((prop) => prop.type === 'SpreadElement')
+                            argumentNode.type === TSESTree.AST_NODE_TYPES.ObjectExpression &&
+                            argumentNode.properties.some(
+                                (prop) => prop.type === TSESTree.AST_NODE_TYPES.SpreadElement
+                            )
                         ) {
                             const alternatingSpreadsAndProps = utils.chunkBy(
                                 argumentNode.properties,
-                                (prop) => prop.type === 'Property'
+                                (prop) => prop.type === TSESTree.AST_NODE_TYPES.Property
                             );
 
                             const args = alternatingSpreadsAndProps.map((chunk) => {
-                                if (chunk[0]!.type === 'SpreadElement') {
-                                    const spreadsArr = chunk as SpreadElement[];
+                                if (chunk[0]?.type === TSESTree.AST_NODE_TYPES.SpreadElement) {
+                                    const spreadsArr = chunk as TSESTree.SpreadElement[];
 
                                     return spreadsArr
                                         .map((se) => sourceCode.getText(se.argument))
                                         .join(', ');
                                 }
 
-                                const propsArr = chunk as Property[];
+                                const propsArr = chunk as TSESTree.Property[];
                                 const propsText = propsArr
                                     .map((prop) => {
                                         const keyText = sourceCode.getText(prop.key);
@@ -80,6 +84,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});

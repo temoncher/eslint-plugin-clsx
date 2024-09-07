@@ -1,9 +1,12 @@
-import type { Rule } from 'eslint';
-import type { Property } from 'estree';
+import { TSESTree } from '@typescript-eslint/types';
 import * as R from 'remeda';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'forbid-true-inside-object-expressions',
+    defaultOptions: ['allowMixed' as 'always' | 'allowMixed'],
     meta: {
         type: 'suggestion',
         docs: {
@@ -11,16 +14,14 @@ const rule: Rule.RuleModule = {
             recommended: true,
         },
         fixable: 'code',
-        schema: [{ enum: ['always', 'allowMixed'] }],
+        schema: [{ type: 'string', enum: ['always', 'allowMixed'] }],
         messages: {
             default: 'Object expression inside clsx should not contain true literals',
         },
     },
-    create(context) {
-        const sourceCode = context.getSourceCode();
+    create(context, [allowTrueLiterals]) {
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
-        const allowTrueLiterals =
-            (context.options[0] as 'always' | 'allowMixed' | undefined) ?? 'allowMixed';
 
         return {
             ImportDeclaration(importNode) {
@@ -36,13 +37,13 @@ const rule: Rule.RuleModule = {
                     .flatMap((clsxCallNode) => clsxCallNode.arguments)
                     // TODO: autofix deep into arrays
                     .forEach((argumentNode) => {
-                        if (argumentNode.type !== 'ObjectExpression') return;
+                        if (argumentNode.type !== TSESTree.AST_NODE_TYPES.ObjectExpression) return;
 
                         const [trueLiteralProps, otherProps] = R.partition(
                             argumentNode.properties,
                             (prop) =>
-                                prop.type === 'Property' &&
-                                prop.value.type === 'Literal' &&
+                                prop.type === TSESTree.AST_NODE_TYPES.Property &&
+                                prop.value.type === TSESTree.AST_NODE_TYPES.Literal &&
                                 prop.value.value === true
                         );
 
@@ -51,7 +52,7 @@ const rule: Rule.RuleModule = {
                             (allowTrueLiterals === 'always' ||
                                 (allowTrueLiterals === 'allowMixed' && otherProps.length === 0))
                         ) {
-                            const trueLiteralPropsText = (trueLiteralProps as Property[])
+                            const trueLiteralPropsText = (trueLiteralProps as TSESTree.Property[])
                                 .map((el) => {
                                     const keyText = sourceCode.getText(el.key);
 
@@ -81,6 +82,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});

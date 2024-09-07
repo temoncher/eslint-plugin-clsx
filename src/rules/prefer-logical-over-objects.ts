@@ -1,8 +1,11 @@
-import type { Rule } from 'eslint';
-import type { Property, SpreadElement } from 'estree';
+import { TSESTree } from '@typescript-eslint/types';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'prefer-logical-over-objects',
+    defaultOptions: [{ startingFrom: 0, endingWith: 999 }],
     meta: {
         type: 'suggestion',
         docs: {
@@ -22,11 +25,9 @@ const rule: Rule.RuleModule = {
             default: 'Usage of logical expressions is preferred over object expressions',
         },
     },
-    create(context) {
-        const sourceCode = context.getSourceCode();
+    create(context, [{ startingFrom, endingWith }]) {
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
-        const { startingFrom = 0, endingWith = Infinity } =
-            (context.options[0] as { startingFrom: number; endingWith: number } | undefined) ?? {};
 
         return {
             ImportDeclaration(importNode) {
@@ -43,7 +44,7 @@ const rule: Rule.RuleModule = {
                     // TODO: autofix deep into arrays
                     .forEach((argumentNode) => {
                         if (
-                            argumentNode.type !== 'ObjectExpression' ||
+                            argumentNode.type !== TSESTree.AST_NODE_TYPES.ObjectExpression ||
                             argumentNode.properties.length < startingFrom ||
                             argumentNode.properties.length >= endingWith
                         )
@@ -51,12 +52,12 @@ const rule: Rule.RuleModule = {
 
                         const alternatingSpreadsAndProps = utils.chunkBy(
                             argumentNode.properties,
-                            (prop) => prop.type === 'Property'
+                            (prop) => prop.type === TSESTree.AST_NODE_TYPES.Property
                         );
 
                         const args = alternatingSpreadsAndProps.map((chunk) => {
-                            if (chunk[0]!.type === 'SpreadElement') {
-                                const spreadsArr = chunk as SpreadElement[];
+                            if (chunk[0]?.type === TSESTree.AST_NODE_TYPES.SpreadElement) {
+                                const spreadsArr = chunk as TSESTree.SpreadElement[];
                                 const spreadsText = spreadsArr
                                     .map((se) => sourceCode.getText(se))
                                     .join(', ');
@@ -64,14 +65,15 @@ const rule: Rule.RuleModule = {
                                 return `{ ${spreadsText} }`;
                             }
 
-                            const propsArr = chunk as Property[];
+                            const propsArr = chunk as TSESTree.Property[];
 
                             return propsArr
                                 .map((prop) => {
                                     const keyText = sourceCode.getText(prop.key);
                                     const valueText = sourceCode.getText(prop.value);
                                     const key =
-                                        !prop.computed && prop.key.type === 'Identifier'
+                                        !prop.computed &&
+                                        prop.key.type === TSESTree.AST_NODE_TYPES.Identifier
                                             ? `'${keyText}'`
                                             : keyText;
 
@@ -82,7 +84,9 @@ const rule: Rule.RuleModule = {
                         });
 
                         if (
-                            argumentNode.properties.every((prop) => prop.type === 'SpreadElement')
+                            argumentNode.properties.every(
+                                (prop) => prop.type === TSESTree.AST_NODE_TYPES.SpreadElement
+                            )
                         ) {
                             context.report({
                                 messageId: 'default',
@@ -101,6 +105,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});
