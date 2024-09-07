@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.5
+
+### Patch Changes
+
+-   93d93a8: fix #6 `prefer-objects-over-logical` autofix
+
 ## 0.0.4
 
 ### Patch Changes
