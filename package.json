@@ -4,7 +4,7 @@
   "description": "An ESLint plugin for clsx/classnames",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rimraf dist && tsup src/**/*.ts !src/**/*.test.ts !src/rules/tests-setup.mjs --format cjs",
+    "build": "rimraf dist && tsup src --format cjs",
     "lint": "npm-run-all \"lint:*\"",
     "lint:tsc": "tsc",
     "lint:docs": "markdownlint \"**/*.md\"",
