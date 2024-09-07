@@ -3,8 +3,6 @@
   "version": "0.0.4",
   "description": "An ESLint plugin for clsx/classnames",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsup src/**/*.ts !src/**/*.test.ts !src/rules/tests-setup.mjs --format cjs",
     "lint": "npm-run-all \"lint:*\"",
