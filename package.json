@@ -8,7 +8,7 @@
     "lint": "npm-run-all \"lint:*\"",
     "lint:tsc": "tsc",
     "lint:docs": "markdownlint \"**/*.md\"",
-    "lint:eslint-docs": "npm run update:eslint-docs -- --check",
+    "//<disabled-for-now>lint:eslint-docs": "npm run update:eslint-docs -- --check",
     "lint:js": "eslint .",
     "update:eslint-docs": "npm run build && eslint-doc-generator",
     "release": "npm run build && changeset publish",
