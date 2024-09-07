@@ -1,7 +1,11 @@
-import type { Rule } from 'eslint';
+import { TSESTree } from '@typescript-eslint/types';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'forbid-array-expressions',
+    defaultOptions: ['always' as 'onlySingleElement' | 'always'],
     meta: {
         type: 'suggestion',
         docs: {
@@ -9,17 +13,15 @@ const rule: Rule.RuleModule = {
             recommended: true,
         },
         fixable: 'code',
-        schema: [{ enum: ['onlySingleElement', 'always'] }],
+        schema: [{ type: 'string', enum: ['onlySingleElement', 'always'] }],
         messages: {
             onlySingleElement: 'Single element arrays are forbidden inside clsx',
             always: 'Usage of array expressions inside clsx is forbidden',
         },
     },
-    create(context) {
-        const sourceCode = context.getSourceCode();
+    create(context, [ruleOptions]) {
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
-        const ruleOptions =
-            (context.options[0] as 'onlySingleElement' | 'always' | undefined) ?? 'always';
 
         return {
             ImportDeclaration(importNode) {
@@ -34,7 +36,7 @@ const rule: Rule.RuleModule = {
                 clsxUsages
                     .flatMap((clsxCallNode) => clsxCallNode.arguments)
                     .forEach((argumentNode) => {
-                        if (argumentNode.type !== 'ArrayExpression') return;
+                        if (argumentNode.type !== TSESTree.AST_NODE_TYPES.ArrayExpression) return;
 
                         if (ruleOptions === 'always') {
                             context.report({
@@ -44,6 +46,7 @@ const rule: Rule.RuleModule = {
                                     fixer.replaceText(
                                         argumentNode,
                                         argumentNode.elements
+                                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                             .map((el) => sourceCode.getText(el!))
                                             .join(', ')
                                     ),
@@ -62,6 +65,7 @@ const rule: Rule.RuleModule = {
                                 fix: (fixer) =>
                                     fixer.replaceText(
                                         argumentNode,
+                                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                         sourceCode.getText(argumentNode.elements[0]!)
                                     ),
                             });
@@ -70,6 +74,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});

@@ -1,8 +1,11 @@
-import type { Rule } from 'eslint';
-import type { LogicalExpression } from 'estree';
+import { TSESTree } from '@typescript-eslint/types';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'prefer-objects-over-logical',
+    defaultOptions: [{ startingFrom: 0, endingWith: 999 }],
     meta: {
         type: 'suggestion',
         docs: {
@@ -22,11 +25,9 @@ const rule: Rule.RuleModule = {
             default: 'Usage of object expressions is preferred over logical expressions',
         },
     },
-    create(context) {
-        const sourceCode = context.getSourceCode();
+    create(context, [{ startingFrom, endingWith }]) {
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
-        const { startingFrom = 0, endingWith = Infinity } =
-            (context.options[0] as { startingFrom: number; endingWith: number } | undefined) ?? {};
 
         return {
             ImportDeclaration(importNode) {
@@ -50,22 +51,23 @@ const rule: Rule.RuleModule = {
                         if (
                             !usageChunks.some(
                                 (chunk) =>
-                                    chunk[0]!.type === 'LogicalExpression' &&
+                                    chunk[0]?.type === TSESTree.AST_NODE_TYPES.LogicalExpression &&
                                     chunk.length >= startingFrom &&
                                     chunk.length < endingWith
                             )
-                        )
+                        ) {
                             return;
+                        }
 
                         const args = usageChunks.map((chunk) => {
-                            if (chunk[0]!.type === 'LogicalExpression') {
-                                const logicalExpressions = chunk as LogicalExpression[];
+                            if (chunk[0]?.type === TSESTree.AST_NODE_TYPES.LogicalExpression) {
+                                const logicalExpressions = chunk as TSESTree.LogicalExpression[];
                                 const newObjectPropsText = logicalExpressions
                                     .map((prop) => {
                                         const keyText =
-                                            prop.right.type === 'Literal' &&
+                                            prop.right.type === TSESTree.AST_NODE_TYPES.Literal &&
                                             typeof prop.right.value === 'string'
-                                                ? prop.right.value
+                                                ? `"${prop.right.value}"`
                                                 : `[${sourceCode.getText(prop.right)}]`;
                                         const valueText = sourceCode.getText(prop.left);
 
@@ -92,6 +94,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});

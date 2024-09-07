@@ -1,7 +1,11 @@
-import type { Rule } from 'eslint';
+import { TSESTree } from '@typescript-eslint/types';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'forbid-false-inside-object-expressions',
+    defaultOptions: [],
     meta: {
         type: 'suggestion',
         docs: {
@@ -15,7 +19,7 @@ const rule: Rule.RuleModule = {
         },
     },
     create(context) {
-        const sourceCode = context.getSourceCode();
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
 
         return {
@@ -32,13 +36,13 @@ const rule: Rule.RuleModule = {
                     .flatMap((clsxCallNode) => clsxCallNode.arguments)
                     // TODO: autofix deep into arrays
                     .forEach((argumentNode) => {
-                        if (argumentNode.type !== 'ObjectExpression') return;
+                        if (argumentNode.type !== TSESTree.AST_NODE_TYPES.ObjectExpression) return;
 
                         const propsWithoutFalseLiterals = argumentNode.properties.filter(
                             (prop) =>
                                 !(
-                                    prop.type === 'Property' &&
-                                    prop.value.type === 'Literal' &&
+                                    prop.type === TSESTree.AST_NODE_TYPES.Property &&
+                                    prop.value.type === TSESTree.AST_NODE_TYPES.Literal &&
                                     prop.value.value === false
                                 )
                         );
@@ -49,7 +53,7 @@ const rule: Rule.RuleModule = {
                                 .join(', ');
 
                             context.report({
-                                messageId: 'trueLiterals',
+                                messageId: 'falseLiterals',
                                 node: argumentNode,
                                 fix: (fixer) => fixer.replaceText(argumentNode, `{ ${propsText} }`),
                             });
@@ -58,6 +62,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});

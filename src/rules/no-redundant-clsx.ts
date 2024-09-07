@@ -1,7 +1,11 @@
-import type { Rule } from 'eslint';
+import { TSESTree } from '@typescript-eslint/types';
+
+import { createRule } from '../createRule';
 import * as utils from '../utils';
 
-const rule: Rule.RuleModule = {
+export = createRule({
+    name: 'no-redundant-clsx',
+    defaultOptions: [],
     meta: {
         type: 'suggestion',
         docs: {
@@ -9,12 +13,13 @@ const rule: Rule.RuleModule = {
             recommended: true,
         },
         fixable: 'code',
+        schema: [],
         messages: {
             default: 'clsx usage is redundant',
         },
     },
     create(context) {
-        const sourceCode = context.getSourceCode();
+        const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
 
         return {
@@ -32,9 +37,13 @@ const rule: Rule.RuleModule = {
                         return;
                     }
 
+                    // eslint-disable-next-line prefer-destructuring
                     const firstArg = clsxCallNode.arguments[0];
 
-                    if (firstArg?.type === 'Literal' || firstArg?.type === 'TemplateLiteral') {
+                    if (
+                        firstArg?.type === TSESTree.AST_NODE_TYPES.Literal ||
+                        firstArg?.type === TSESTree.AST_NODE_TYPES.TemplateLiteral
+                    ) {
                         context.report({
                             messageId: 'default',
                             node: clsxCallNode,
@@ -49,6 +58,4 @@ const rule: Rule.RuleModule = {
             },
         };
     },
-};
-
-export = rule;
+});
