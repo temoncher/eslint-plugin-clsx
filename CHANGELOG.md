@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.4
+
+### Patch Changes
+
+-   5eb6a1e: no-redundant-clsx improvement
+
 ## 0.0.3
 
 ### Patch Changes
