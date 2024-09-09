@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.7
+
+### Patch Changes
+
+-   8594323: cleanup published files
+
 ## 0.0.6
 
 ### Patch Changes
