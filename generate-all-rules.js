@@ -1,6 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
 
+function camelize(s) {
+    return s.replace(/-./g, (x) => x[1].toUpperCase());
+}
+
 const ruleNames = fs
     .readdirSync(`${__dirname}/src/rules`)
     .filter(
@@ -12,9 +16,9 @@ const ruleNames = fs
     )
     .map((fileName) => fileName.replace(/\.ts$/, ''));
 
-const imports = ruleNames.map((name, i) => `import r${i} from './${name}';`).join('\n');
+const imports = ruleNames.map((name) => `import ${camelize(name)} from './${name}';`).join('\n');
 
-const pairs = ruleNames.map((name, i) => `"${name}": r${i}`).join(',\n');
+const pairs = ruleNames.map((name) => `"${name}": ${camelize(name)}`).join(',\n');
 
 const content = `${imports}\nexport const allRules = {\n${pairs}\n};\n`;
 
