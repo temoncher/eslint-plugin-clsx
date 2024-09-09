@@ -1,30 +1,17 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
-import type { Rule } from 'eslint';
+import type { RuleModule } from '@typescript-eslint/utils/ts-eslint';
 import * as R from 'remeda';
 
 import packageJson from '../package.json';
+
+import { PluginDocs } from './PluginDocs';
+import { allRules } from './rules/allRules.generated';
 
 const REPO_URL = packageJson.repository.url.replace(/^git\+/, '').replace(/\.git$/, '');
 
 const configFilters = {
     all: () => true,
-    recommended: (rule: Rule.RuleModule) => rule.meta?.docs?.recommended,
+    recommended: (rule: RuleModule<string, unknown[], PluginDocs>) => rule.meta?.docs?.recommended,
 };
-
-const allRules = Object.fromEntries(
-    fs
-        .readdirSync(`${__dirname}/rules`)
-        .map((fileName) => fileName.replace(/\.js$/, ''))
-
-        .map((ruleName) => [
-            ruleName,
-
-            // eslint-disable-next-line @typescript-eslint/no-require-imports
-            require(path.join(__dirname, 'rules', ruleName)) as Rule.RuleModule,
-        ])
-);
 
 export = {
     rules: R.mapValues(allRules, (rule, ruleName) => ({
