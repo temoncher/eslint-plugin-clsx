@@ -1,12 +1,8 @@
 import type { RuleModule } from '@typescript-eslint/utils/ts-eslint';
 import * as R from 'remeda';
 
-import packageJson from '../package.json';
-
 import { PluginDocs } from './PluginDocs';
-import { allRules } from './rules/allRules.generated';
-
-const REPO_URL = packageJson.repository.url.replace(/^git\+/, '').replace(/\.git$/, '');
+import { allRules, REPO_URL } from './rules/allRules.generated';
 
 const configFilters = {
     all: () => true,
