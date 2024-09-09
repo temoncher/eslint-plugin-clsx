@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-clsx",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "An ESLint plugin for clsx/classnames",
   "main": "dist/index.js",
   "scripts": {
