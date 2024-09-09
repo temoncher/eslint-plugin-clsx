@@ -1,1 +1,1 @@
-export type PluginDocs = { recommended?: string };
+export type PluginDocs = { recommended?: boolean };
