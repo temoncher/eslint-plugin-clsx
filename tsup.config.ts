@@ -1,8 +1,9 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-    entry: ['src/**/*.ts', '!src/**/*.test.ts', '!src/rules/tests-setup.mjs'],
+    entry: ['src/index.ts'],
     splitting: false,
     sourcemap: false,
     clean: true,
+    treeshake: true,
 });
