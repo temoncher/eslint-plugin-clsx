@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.6
+
+### Patch Changes
+
+-   75d5227: fix #16 critical build issue
+
 ## 0.0.5
 
 ### Patch Changes
