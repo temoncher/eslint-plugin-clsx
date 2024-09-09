@@ -17,3 +17,4 @@ export const allRules = {
     'prefer-merged-neighboring-elements': preferMergedNeighboringElements,
     'prefer-objects-over-logical': preferObjectsOverLogical,
 };
+export const REPO_URL = 'https://github.com/temoncher/eslint-plugin-clsx';
