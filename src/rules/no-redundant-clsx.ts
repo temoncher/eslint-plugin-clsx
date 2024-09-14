@@ -3,9 +3,19 @@ import { TSESTree } from '@typescript-eslint/types';
 import { createRule } from '../createRule';
 import * as utils from '../utils';
 
+/** checks if firstArg is e.g. `styles.foo` (if cssModuleNames includes 'styles') */
+function firstArgIsCssModule(cssModuleNames: string[], firstArg?: TSESTree.Node) {
+    return (
+        cssModuleNames.length &&
+        firstArg?.type === TSESTree.AST_NODE_TYPES.MemberExpression &&
+        firstArg.object.type === TSESTree.AST_NODE_TYPES.Identifier &&
+        cssModuleNames.includes(firstArg.object.name)
+    );
+}
+
 export = createRule({
     name: 'no-redundant-clsx',
-    defaultOptions: [],
+    defaultOptions: [{ cssModuleNames: [] }],
     meta: {
         type: 'suggestion',
         docs: {
@@ -13,12 +23,24 @@ export = createRule({
             recommended: true,
         },
         fixable: 'code',
-        schema: [],
+        schema: [
+            {
+                type: 'object',
+                properties: {
+                    cssModuleNames: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        uniqueItems: true,
+                    },
+                },
+                additionalProperties: false,
+            },
+        ],
         messages: {
             default: 'clsx usage is redundant',
         },
     },
-    create(context) {
+    create(context, [{ cssModuleNames }]) {
         const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
 
@@ -42,7 +64,8 @@ export = createRule({
 
                     if (
                         firstArg?.type === TSESTree.AST_NODE_TYPES.Literal ||
-                        firstArg?.type === TSESTree.AST_NODE_TYPES.TemplateLiteral
+                        firstArg?.type === TSESTree.AST_NODE_TYPES.TemplateLiteral ||
+                        firstArgIsCssModule(cssModuleNames, firstArg)
                     ) {
                         context.report({
                             messageId: 'default',

@@ -24,7 +24,32 @@ Examples of **correct** code for this rule:
 /* eslint clsx/no-redundant-clsx: error */
 
 const singleClasses = 'single-class';
-const twoClasseses = clsx('first-class', 'second-class')
+const twoClasses = clsx('first-class', 'second-class')
+```
+
+## Options
+
+This rule has an object option with one optional property: "cssModuleNames"
+
+### cssModuleNames (default: [])
+
+Specify variable names that should be treated as CSS module imports. This is useful for catching redundant clsx usage with CSS modules.
+
+Examples of **incorrect** code for `{ cssModuleNames: ['styles'] }`:
+
+```js
+/* eslint 'clsx/no-redundant-clsx': ['error', { cssModuleNames: ['styles'] }] */
+
+const singleClasses = clsx(styles.singleClass);
+```
+
+Examples of **correct** code for `{ cssModuleNames: ['styles'] }`:
+
+```js
+/* eslint 'clsx/no-redundant-clsx': ['error', { cssModuleNames: ['styles'] }] */
+
+const singleClass = styles.singleClass
+const twoClasses = clsx(styles.firstClass, styles.secondClass);
 ```
 
 ## When Not To Use It
