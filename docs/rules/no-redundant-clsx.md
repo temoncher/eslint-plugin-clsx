@@ -35,18 +35,18 @@ This rule has an object option with one optional property: "selector"
 
 "selector" accepts [esquery selector](https://eslint.org/docs/latest/extend/selectors) to apply to signle argument of `clsx` usage. If argument matches this selector clsx usage is considered redundant
 
-Examples of **incorrect** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }` option:
+Examples of **incorrect** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }` option:
 
 ```js
-/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }] */
+/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }] */
 
 const classes = clsx(styles.myStyle);
 ```
 
-Examples of **correct** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }` option:
+Examples of **correct** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }` option:
 
 ```js
-/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }] */
+/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }] */
 
 const classes = styles.myStyle;
 ```
