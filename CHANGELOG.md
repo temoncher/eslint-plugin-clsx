@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.8
+
+### Patch Changes
+
+-   50b38fc: add redundancy selector for no-redundant-clsx
+
 ## 0.0.7
 
 ### Patch Changes
