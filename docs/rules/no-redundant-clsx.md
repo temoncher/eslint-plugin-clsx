@@ -27,6 +27,32 @@ const singleClasses = 'single-class';
 const twoClasseses = clsx('first-class', 'second-class')
 ```
 
+## Options
+
+This rule has an object option with one optional property: "selector"
+
+### selector
+
+"selector" accepts [esquery selector](https://eslint.org/docs/latest/extend/selectors) to apply to signle argument of `clsx` usage. If argument matches this selector clsx usage is considered redundant
+
+Examples of **incorrect** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }` option:
+
+```js
+/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }] */
+
+const classes = clsx(styles.myStyle);
+```
+
+Examples of **correct** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }` option:
+
+```js
+/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])" }] */
+
+const classes = styles.myStyle;
+```
+
+Default value is `{ selector: ":matches(Literal, TemplateLiteral)" }`
+
 ## When Not To Use It
 
 If you're ok with clsx used redundantly

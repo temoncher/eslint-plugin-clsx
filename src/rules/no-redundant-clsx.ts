@@ -1,11 +1,11 @@
-import { TSESTree } from '@typescript-eslint/types';
+import { query } from 'esquery';
 
 import { createRule } from '../createRule';
 import * as utils from '../utils';
 
 export = createRule({
     name: 'no-redundant-clsx',
-    defaultOptions: [],
+    defaultOptions: [{ selector: ':matches(Literal, TemplateLiteral)' }],
     meta: {
         type: 'suggestion',
         docs: {
@@ -13,12 +13,19 @@ export = createRule({
             recommended: true,
         },
         fixable: 'code',
-        schema: [],
+        schema: [
+            {
+                type: 'object',
+                properties: {
+                    selector: { type: 'string' },
+                },
+            },
+        ],
         messages: {
             default: 'clsx usage is redundant',
         },
     },
-    create(context) {
+    create(context, [{ selector }]) {
         const { sourceCode } = context;
         const clsxOptions = utils.extractClsxOptions(context);
 
@@ -40,10 +47,7 @@ export = createRule({
                     // eslint-disable-next-line prefer-destructuring
                     const firstArg = clsxCallNode.arguments[0];
 
-                    if (
-                        firstArg?.type === TSESTree.AST_NODE_TYPES.Literal ||
-                        firstArg?.type === TSESTree.AST_NODE_TYPES.TemplateLiteral
-                    ) {
+                    if (query(firstArg as import('estree').Node, selector).length > 0) {
                         context.report({
                             messageId: 'default',
                             node: clsxCallNode,
@@ -51,9 +55,6 @@ export = createRule({
                                 fixer.replaceText(clsxCallNode, sourceCode.getText(firstArg)),
                         });
                     }
-
-                    // ? TODO: clsx(['some-class']) -> 'some-class'
-                    // ? TODO: clsx({ 'some-class': true }) -> 'some-class'
                 });
             },
         };

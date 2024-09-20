@@ -38,6 +38,7 @@ export = createRule({
                     .forEach((argumentNode) => {
                         if (argumentNode.type !== TSESTree.AST_NODE_TYPES.ArrayExpression) return;
 
+                        // TODO?: move this check out of visitor for performance
                         if (ruleOptions === 'always') {
                             context.report({
                                 messageId: 'always',
