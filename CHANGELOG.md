@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.9
+
+### Patch Changes
+
+-   2241036: fix no-redundant-clsx autofixing object literal wrapped with clsx
+
 ## 0.0.8
 
 ### Patch Changes
