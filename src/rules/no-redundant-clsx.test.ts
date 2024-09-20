@@ -13,6 +13,24 @@ const classes = clsx('flex', 'flex-col');
 `,
         },
         {
+            name: 'Default selector. Object literal',
+            code: `
+import clsx from 'clsx';
+
+const condition = true;
+const classes = clsx({ 'flex': condition });
+`,
+        },
+        {
+            name: 'Default selector. Array literal',
+            code: `
+import clsx from 'clsx';
+
+const condition = true;
+const classes = clsx(['flex']);
+`,
+        },
+        {
             name: 'Only Literal selector. Template literal',
             options: [{ selector: 'Literal' }],
             code: `
@@ -71,7 +89,7 @@ const classes = \`flex-\${col}\`;
             options: [
                 {
                     selector:
-                        ':matches(Literal, TemplateLiteral, MemberExpression > Identifier.object[name="styles"])',
+                        ':matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])',
                 },
             ],
             code: `

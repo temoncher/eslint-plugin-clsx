@@ -1,4 +1,4 @@
-import { query } from 'esquery';
+import { matches, parse } from 'esquery';
 
 import { createRule } from '../createRule';
 import * as utils from '../utils';
@@ -47,7 +47,7 @@ export = createRule({
                     // eslint-disable-next-line prefer-destructuring
                     const firstArg = clsxCallNode.arguments[0];
 
-                    if (query(firstArg as import('estree').Node, selector).length > 0) {
+                    if (matches(firstArg as import('estree').Node, parse(selector))) {
                         context.report({
                             messageId: 'default',
                             node: clsxCallNode,
