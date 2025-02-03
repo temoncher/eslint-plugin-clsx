@@ -33,34 +33,34 @@
   },
   "homepage": "https://github.com/temoncher/eslint-plugin-clsx#readme",
   "devDependencies": {
-    "@changesets/cli": "^2.27.8",
-    "@types/eslint": "^8.56.12",
+    "@changesets/cli": "^2.27.12",
+    "@types/eslint": "^9.6.1",
     "@types/esquery": "^1.5.4",
-    "@types/node": "^22.5.4",
-    "@typescript-eslint/eslint-plugin": "^8.4.0",
-    "@typescript-eslint/parser": "^8.4.0",
-    "@typescript-eslint/rule-tester": "^8.4.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-doc-generator": "1.4.2",
-    "eslint-plugin-import": "^2.30.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "markdownlint-cli": "^0.41.0",
+    "@types/node": "^22.13.4",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
+    "@typescript-eslint/rule-tester": "^8.23.0",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-doc-generator": "2.0.2",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "markdownlint-cli": "^0.44.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
-    "tsup": "^8.2.4",
-    "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
   },
   "dependencies": {
-    "@typescript-eslint/types": "^8.4.0",
-    "@typescript-eslint/utils": "^8.4.0",
+    "@typescript-eslint/types": "^8.23.0",
+    "@typescript-eslint/utils": "^8.23.0",
     "esquery": "^1.6.0",
-    "remeda": "^2.12.0"
+    "remeda": "^2.20.0"
   },
   "peerDependencies": {
-    "eslint": "^8"
+    "eslint": "^8 || ^9"
   },
   "files": [
     "*.md",
