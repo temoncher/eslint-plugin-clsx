@@ -1,8 +1,8 @@
 # eslint-plugin-clsx
 
-## 0.1.0
+## 0.0.10
 
-### Minor Changes
+### Patch Changes
 
 - 56fbdbd: fix peer dependency warning
 
