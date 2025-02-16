@@ -53,7 +53,9 @@ export function findClsxImport(importNode: TSESTree.ImportDeclaration, clsxOptio
 
             const named = importNode.specifiers.find(
                 (s) =>
-                    s.type === TSESTree.AST_NODE_TYPES.ImportSpecifier && s.imported.name === name
+                    s.type === TSESTree.AST_NODE_TYPES.ImportSpecifier &&
+                    'name' in s.imported &&
+                    s.imported.name === name
             );
 
             return named?.local.name;
