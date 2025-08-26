@@ -38,7 +38,7 @@ This rule has an object option with one optional property: "selector"
 Examples of **incorrect** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }` option:
 
 ```js
-/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }] */
+/* eslint clsx/no-redundant-clsx: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }] */
 
 const classes = clsx(styles.myStyle);
 ```
@@ -46,7 +46,7 @@ const classes = clsx(styles.myStyle);
 Examples of **correct** code for the `{ selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }` option:
 
 ```js
-/* eslint clsx/no-spreading: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }] */
+/* eslint clsx/no-redundant-clsx: ['error', { selector: ":matches(Literal, TemplateLiteral, MemberExpression[object.name="styles"])" }] */
 
 const classes = styles.myStyle;
 ```
