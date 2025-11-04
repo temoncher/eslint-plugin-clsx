@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.11
+
+### Patch Changes
+
+- 4e9cb43: declaration files and flat configs
+
 ## 0.0.10
 
 ### Patch Changes
