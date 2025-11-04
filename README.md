@@ -77,6 +77,18 @@ Here's an example ESLint configuration that:
 
 Presets are enabled by adding a line to the `extends` list in your config file. For example, to enable the `recommended` preset, use:
 
+```js
+import { defineConfig } from "eslint/config";
+import clsx from "eslint-plugin-clsx";
+
+export default defineConfig(
+  /* Main config */
+  clsx.configs.flat.recommended,
+);
+```
+
+#### Legacy config (.eslintrc.json)
+
 ```json
 {
     "extends": ["plugin:clsx/recommended"]
@@ -86,6 +98,27 @@ Presets are enabled by adding a line to the `extends` list in your config file. 
 ## <a name='Settings'></a>Settings
 
 This rule can optionally be configured with an object that represents imports that should be considered an clsx usage
+
+```js
+import { defineConfig } from "eslint/config";
+import clsx from "eslint-plugin-clsx";
+
+export default defineConfig(
+  {
+    plugins: { clsx },
+    settings: {
+      clsxOptions: {
+        myclsx: ["default", "clsx"],
+      },
+    },
+    rules: {
+      'clsx/no-redundant-clsx': 'error',
+    }
+  }
+);
+```
+
+#### Legacy config (.eslintrc.json)
 
 ```json
 {
