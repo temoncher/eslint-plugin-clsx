@@ -87,7 +87,7 @@ export default defineConfig(
 );
 ```
 
-#### Legacy config (.eslintrc.json)
+or in legacy config (.eslintrc.json)
 
 ```json
 {
@@ -118,7 +118,7 @@ export default defineConfig(
 );
 ```
 
-#### Legacy config (.eslintrc.json)
+or in legacy config (.eslintrc.json)
 
 ```json
 {
