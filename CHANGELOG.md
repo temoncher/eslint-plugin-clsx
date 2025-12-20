@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.0.12
+
+### Patch Changes
+
+- 600c314: disallow extra properties in rule options
+
 ## 0.0.11
 
 ### Patch Changes
