@@ -16,6 +16,7 @@ export = createRule({
         schema: [
             {
                 type: 'object',
+                additionalProperties: false,
                 properties: {
                     selector: { type: 'string' },
                 },

@@ -15,6 +15,7 @@ export = createRule({
         schema: [
             {
                 type: 'object',
+                additionalProperties: false,
                 properties: {
                     startingFrom: { type: 'number' },
                     endingWith: { type: 'number' },
