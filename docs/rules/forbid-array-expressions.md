@@ -1,4 +1,6 @@
-# Forbid usage of array expressions inside clsx (`clsx/forbid-array-expressions`)
+# clsx/forbid-array-expressions
+
+📝 Forbid usage of array expressions inside clsx.
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 

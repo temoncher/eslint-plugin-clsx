@@ -1,4 +1,6 @@
-# Forbid usage of true literal inside object expressions of clsx (`clsx/forbid-true-inside-object-expressions`)
+# clsx/forbid-true-inside-object-expressions
+
+📝 Forbid usage of true literal inside object expressions of clsx.
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 

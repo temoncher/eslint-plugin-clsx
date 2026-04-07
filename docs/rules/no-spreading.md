@@ -1,4 +1,6 @@
-# Forbid usage of object expression inside clsx (`clsx/no-spreading`)
+# clsx/no-spreading
+
+📝 Forbid usage of object expression inside clsx.
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 
