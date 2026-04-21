@@ -1,5 +1,11 @@
 # eslint-plugin-clsx
 
+## 0.1.0
+
+### Minor Changes
+
+- 66a83c4: add eslint 10 support
+
 ## 0.0.12
 
 ### Patch Changes
