@@ -1,4 +1,6 @@
-# Disallow redundant clsx usage (`clsx/no-redundant-clsx`)
+# clsx/no-redundant-clsx
+
+📝 Disallow redundant clsx usage.
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 

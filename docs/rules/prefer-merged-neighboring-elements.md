@@ -1,4 +1,6 @@
-# Enforce merging of neighboring elements (`clsx/prefer-merged-neighboring-elements`)
+# clsx/prefer-merged-neighboring-elements
+
+📝 Enforce merging of neighboring elements.
 
 ⚠️ This rule _warns_ in the ✅ `recommended` [config](https://github.com/temoncher/eslint-plugin-clsx#presets).
 

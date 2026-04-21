@@ -1,4 +1,5 @@
-import type { RuleModule, ClassicConfig, FlatConfig } from '@typescript-eslint/utils/ts-eslint';
+import type { RuleModule, ClassicConfig, SharedConfig } from '@typescript-eslint/utils/ts-eslint';
+import type { Rule } from 'eslint';
 import * as R from 'remeda';
 
 import { PluginDocs } from './PluginDocs';
@@ -19,7 +20,7 @@ const rules = R.mapValues(allRules, (rule, ruleName) => ({
 })) as {
     [K in keyof typeof allRules]: (typeof allRules)[K] & {
         meta: { url: `${typeof REPO_URL}/tree/HEAD/docs/rules/${K}.md` };
-    };
+    } & Rule.RuleModule;
 };
 
 const configs = R.mapValues(configFilters, (configPredicate) => ({
@@ -28,7 +29,7 @@ const configs = R.mapValues(configFilters, (configPredicate) => ({
         Object.entries(allRules)
             .filter(([_ruleName, rule]) => configPredicate(rule))
             .map(([ruleName]) => [`clsx/${ruleName}`, 1])
-    ),
+    ) as SharedConfig.RulesRecord,
 })) as Record<keyof typeof configFilters, ClassicConfig.Config>;
 
 export = {
@@ -41,7 +42,7 @@ export = {
                 Object.entries(allRules)
                     .filter(([_ruleName, rule]) => configPredicate(rule))
                     .map(([ruleName]) => [`clsx/${ruleName}`, 1])
-            ),
-        })) as Record<keyof typeof configFilters, FlatConfig.Config>,
+            ) as SharedConfig.RulesRecord,
+        })),
     },
 };

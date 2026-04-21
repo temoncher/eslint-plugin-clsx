@@ -1,16 +1,16 @@
 import tsParser from '@typescript-eslint/parser';
-import importPlugin from 'eslint-plugin-import';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
+import { importX, createNodeResolver } from 'eslint-plugin-import-x';
 import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
-    {
-        ignores: ['node_modules/', 'dist/'],
-    },
+export default defineConfig([
+    globalIgnores(['node_modules/', 'dist/']),
     {
         extends: [
             tseslint.configs.recommended,
-            importPlugin.flatConfigs.recommended,
+            importX.flatConfigs.recommended,
             prettierRecommended,
         ],
         languageOptions: {
@@ -82,7 +82,7 @@ export default tseslint.config(
                 },
             ],
 
-            'import/order': [
+            'import-x/order': [
                 1,
                 {
                     groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
@@ -98,9 +98,9 @@ export default tseslint.config(
                 },
             ],
 
-            'import/prefer-default-export': 0,
-            'import/extensions': 0,
-            'import/no-unresolved': 0,
+            'import-x/prefer-default-export': 0,
+            'import-x/extensions': 0,
+            'import-x/no-unresolved': 0,
         },
     },
     {
@@ -108,7 +108,7 @@ export default tseslint.config(
         extends: [
             tseslint.configs.recommendedTypeChecked,
             tseslint.configs.strict,
-            importPlugin.flatConfigs.typescript,
+            importX.flatConfigs.typescript,
             prettierRecommended,
         ],
         languageOptions: {
@@ -117,8 +117,11 @@ export default tseslint.config(
                 project: './tsconfig.json',
             },
         },
+        settings: {
+            'import-x/resolver-next': [createTypeScriptImportResolver(), createNodeResolver()],
+        },
         rules: {
             '@typescript-eslint/no-unused-vars': [1, { argsIgnorePattern: '^_.*' }],
         },
-    }
-);
+    },
+]);

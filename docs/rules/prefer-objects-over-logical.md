@@ -1,4 +1,6 @@
-# Forbid usage of logical expressions inside clsx (`clsx/prefer-objects-over-logical`)
+# clsx/prefer-objects-over-logical
+
+📝 Forbid usage of logical expressions inside clsx.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
